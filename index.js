@@ -30,18 +30,9 @@ var npm2Package = path.join(npm2Path, 'package.json');
 
 var ffmpegPath, packageJson;
 
-if (verifyFile(npm3Binary)) {
-    ffmpegPath = npm3Binary;
-    packageJson = require(npm3Package);
-} else if (verifyFile(npm2Binary)) {
-    ffmpegPath = npm2Binary;
-    packageJson = require(npm2Package);
-} else if (verifyFile(topLevelBinary)) {
-    ffmpegPath = topLevelBinary;
-    packageJson = require(topLevelPackage);
-} else {
-    throw 'Could not find ffmpeg executable, tried "' + npm3Binary + '", "' + npm2Binary + '" and "' + topLevelBinary + '"';
-}
+// Always assume npm3 because webpack erroneously will choose the wrong path when packaging.
+ffmpegPath = npm3Binary;
+packageJson = require(npm3Package);
 
 var version = packageJson.ffmpeg || packageJson.version;
 var url = packageJson.homepage;
